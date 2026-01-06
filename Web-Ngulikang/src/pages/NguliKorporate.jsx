@@ -136,20 +136,21 @@ const NguliKorporate = () => {
                 {currentStep === 1 && (
                     <>
                         {/* HEADLINE */}
-                        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                            <h1 style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '16px' }}>
+                        <div className="page-header-section">
+                            <h1>
                                 Layanan Prioritas Korporat
                             </h1>
-                            <p style={{ color: '#aaa', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
+                            <p>
                                 Solusi konstruksi end-to-end dengan dukungan Account Manager dedikasi dan legalitas lengkap
                             </p>
                         </div>
 
                         {/* SERVICES GRID */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px', marginBottom: '80px' }}>
-                            {services.slice(0, isExpanded ? services.length : 3).map((service) => (
+                        <div className={`horizontal-scroll-container ${!isExpanded ? 'desktop-limit-view' : ''}`}>
+                            {services.map((service) => (
                                 <motion.div
                                     key={service.id}
+                                    className="team-card-item"
                                     whileHover={{ y: -10 }}
                                     style={{
                                         background: '#111',
@@ -215,7 +216,7 @@ const NguliKorporate = () => {
                         </div>
 
                         {/* VIEW MORE TOGGLE */}
-                        <div style={{ textAlign: 'center', marginBottom: '100px' }}>
+                        <div className="show-more-btn-container">
                             <button
                                 onClick={() => setIsExpanded(!isExpanded)}
                                 style={{
@@ -241,7 +242,7 @@ const NguliKorporate = () => {
                         </div>
 
                         {/* REQUEST FORM SECTION */}
-                        <div style={{
+                        <div className="corporate-form-container" style={{
                             background: '#131313',
                             borderRadius: '30px',
                             border: '1px solid #333',
@@ -255,7 +256,7 @@ const NguliKorporate = () => {
 
                             <form>
                                 {/* Row 1 */}
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginBottom: '30px' }}>
+                                <div className="form-grid-2-col">
                                     <div>
                                         <label style={{ display: 'block', color: 'white', fontWeight: 'bold', marginBottom: '10px', fontSize: '0.9rem' }}>Nama Perusahaan (PT/CV)</label>
                                         <input
@@ -283,7 +284,7 @@ const NguliKorporate = () => {
                                 </div>
 
                                 {/* Row 2 */}
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginBottom: '30px' }}>
+                                <div className="form-grid-2-col">
                                     <div>
                                         <label style={{ display: 'block', color: 'white', fontWeight: 'bold', marginBottom: '10px', fontSize: '0.9rem' }}>Email Korporat</label>
                                         <input

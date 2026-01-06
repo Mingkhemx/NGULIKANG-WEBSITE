@@ -513,28 +513,9 @@ const Login = ({ onNavigate }) => {
 
     // RENDER: LOGIN VIEW (Existing Split Layout)
     return (
-        <div style={{
-            display: 'flex',
-            minHeight: '100vh',
-            fontFamily: "'Inter', sans-serif",
-            background: 'white',
-            position: 'absolute', // Force full coverage
-            top: 0,
-            left: 0,
-            width: '100%',
-            zIndex: 99999 // Ensure it sits on top of everything
-        }}>
+        <div className="login-split-container">
             {/* LEFT SIDE - FORM */}
-            <div style={{
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '40px',
-                background: '#fff',
-                position: 'relative',
-                zIndex: 10
-            }}>
+            <div className="login-form-side">
                 <div style={{ width: '100%', maxWidth: '400px' }}>
                     <motion.div
                         key={isLogin ? 'login-header' : 'register-header'}
@@ -718,16 +699,7 @@ const Login = ({ onNavigate }) => {
             </div>
 
             {/* RIGHT SIDE - VISUAL */}
-            <div style={{
-                flex: 1,
-                background: 'linear-gradient(135deg, #FF8C42 0%, #F54A00 100%)', // Richer Orange Gradient base
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '60px',
-                overflow: 'hidden'
-            }}>
+            <div className="login-visual-side">
                 {/* Animated Background Elements */}
                 <motion.div
                     animate={{

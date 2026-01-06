@@ -253,7 +253,7 @@ const DaftarKerja = ({ onNavigate }) => {
                         {step === 1 && (
                             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
                                 <div className="section-title" style={{ marginTop: 0 }}>Biodata Diri & Identitas</div>
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                                <div className="form-grid-2-col">
                                     <div className="form-group">
                                         <label className="form-label">Nama Lengkap (Sesuai KTP)</label>
                                         <input
@@ -290,7 +290,7 @@ const DaftarKerja = ({ onNavigate }) => {
                                     />
                                 </div>
 
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                                <div className="form-grid-2-col">
                                     <div className="form-group">
                                         <label className="form-label">Nomor WhatsApp</label>
                                         <input
@@ -417,7 +417,7 @@ const DaftarKerja = ({ onNavigate }) => {
                                     </div>
                                 </div>
 
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                                <div className="form-grid-2-col">
                                     <div className="form-group">
                                         <label className="form-label">Lama Pengalaman</label>
                                         <input
@@ -454,7 +454,7 @@ const DaftarKerja = ({ onNavigate }) => {
                                     />
                                 </div>
 
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                                <div className="form-grid-2-col">
                                     <div className="form-group">
                                         <label className="form-label">Bersedia Pindah Lokasi?</label>
                                         <div className="radio-group">

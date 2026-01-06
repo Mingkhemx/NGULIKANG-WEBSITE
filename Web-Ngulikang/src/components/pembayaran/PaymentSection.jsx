@@ -45,7 +45,7 @@ const PaymentSection = ({ team, finalPrice, onPaymentComplete, projectType = "Pa
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '30px', alignItems: 'start' }}
+            className="split-layout-grid"
         >
             {/* LEFT COLUMN: PAYMENT METHODS */}
             <div style={{

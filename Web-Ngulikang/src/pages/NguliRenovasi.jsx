@@ -99,13 +99,13 @@ const NguliRenovasi = () => {
 
     const [availableWorkers, setAvailableWorkers] = useState([]);
 
-useEffect(() => {
-  let alive = true;
-  apiGet('/api/renovation-workers')
-    .then((data) => { if (alive) setAvailableWorkers(data?.data || []); })
-    .catch(console.error);
-  return () => { alive = false; };
-}, []);
+    useEffect(() => {
+        let alive = true;
+        apiGet('/api/renovation-workers')
+            .then((data) => { if (alive) setAvailableWorkers(data?.data || []); })
+            .catch(console.error);
+        return () => { alive = false; };
+    }, []);
 
 
     const handleWorkerSelection = (workerId) => {
@@ -155,40 +155,31 @@ useEffect(() => {
             <div style={{ position: 'relative', zIndex: 10, maxWidth: '1200px', margin: '0 auto', padding: '180px 20px 80px' }}>
 
                 {/* STEPPER */}
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '60px' }}>
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0',
-                        background: 'rgba(30, 30, 30, 0.6)',
-                        backdropFilter: 'blur(12px)',
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
-                        borderRadius: '24px',
-                        padding: '25px 50px',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
-                    }}>
+                <div className="step-progress-wrapper">
+                    <div className="step-progress-container">
                         {/* Step 1 */}
-                        <div style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                            <div style={{
+                        <div className="step-item">
+                            <div className="step-circle" style={{
                                 width: '40px',
                                 height: '40px',
                                 borderRadius: '50%',
                                 background: '#FF8C42',
+                                border: 'none',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 fontWeight: 'bold',
                                 margin: '0 auto 8px',
-                                boxShadow: '0 0 20px rgba(255,140,66,0.4)',
-                                color: 'black'
+                                color: 'black',
+                                boxShadow: '0 0 20px rgba(255,140,66,0.4)'
                             }}>1</div>
-                            <div style={{ fontSize: '0.8rem', color: '#FF8C42', fontWeight: 'bold' }}>Isi Data</div>
+                            <div className="step-label" style={{ fontSize: '0.8rem', color: '#FF8C42', fontWeight: 'bold' }}>Isi Data</div>
                         </div>
-                        <div style={{ width: '100px', height: '2px', background: '#444', margin: '0 15px', position: 'relative', top: '-14px' }}></div>
+                        <div className="step-line"></div>
 
                         {/* Step 2 */}
-                        <div style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                            <div style={{
+                        <div className="step-item">
+                            <div className="step-circle" style={{
                                 width: '40px',
                                 height: '40px',
                                 borderRadius: '50%',
@@ -202,13 +193,13 @@ useEffect(() => {
                                 color: currentStep >= 2 ? 'black' : '#777',
                                 boxShadow: currentStep >= 2 ? '0 0 20px rgba(255,140,66,0.4)' : 'none'
                             }}>2</div>
-                            <div style={{ fontSize: '0.8rem', color: currentStep >= 2 ? '#FF8C42' : '#777', fontWeight: currentStep >= 2 ? 'bold' : 'normal' }}>Negosiasi</div>
+                            <div className="step-label" style={{ fontSize: '0.8rem', color: currentStep >= 2 ? '#FF8C42' : '#777', fontWeight: currentStep >= 2 ? 'bold' : 'normal' }}>Negosiasi</div>
                         </div>
-                        <div style={{ width: '100px', height: '2px', background: '#444', margin: '0 15px', position: 'relative', top: '-14px' }}></div>
+                        <div className="step-line"></div>
 
                         {/* Step 3 */}
-                        <div style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                            <div style={{
+                        <div className="step-item">
+                            <div className="step-circle" style={{
                                 width: '40px',
                                 height: '40px',
                                 borderRadius: '50%',
@@ -222,7 +213,7 @@ useEffect(() => {
                                 color: currentStep >= 3 ? 'black' : '#777',
                                 boxShadow: currentStep >= 3 ? '0 0 20px rgba(255,140,66,0.4)' : 'none'
                             }}>3</div>
-                            <div style={{ fontSize: '0.8rem', color: currentStep >= 3 ? '#FF8C42' : '#777', fontWeight: currentStep >= 3 ? 'bold' : 'normal' }}>Pembayaran</div>
+                            <div className="step-label" style={{ fontSize: '0.8rem', color: currentStep >= 3 ? '#FF8C42' : '#777', fontWeight: currentStep >= 3 ? 'bold' : 'normal' }}>Pembayaran</div>
                         </div>
                     </div>
                 </div>
@@ -235,15 +226,14 @@ useEffect(() => {
                         exit={{ opacity: 0, y: -20 }}
                     >
                         {/* Header */}
-                        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+                        <div className="page-header-section">
                             <motion.h1
                                 initial={{ opacity: 0, y: -20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '16px' }}
                             >
                                 Layanan <span style={{ color: '#FF8C42' }}>Renovasi</span> Profesional
                             </motion.h1>
-                            <p style={{ color: '#aaa', maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>
+                            <p>
                                 Wujudkan hunian impian Anda bersama kontraktor dan arsitek berpengalaman
                             </p>
                         </div>
@@ -253,15 +243,9 @@ useEffect(() => {
 
 
 
-                            <div style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(3, 1fr)',
-                                gap: '24px',
-                                position: 'relative',
-                                zIndex: 1
-                            }}>
+                            <div className="horizontal-scroll-container">
                                 {renovationTypes.map((type) => (
-                                    <CardContainer key={type.id}>
+                                    <CardContainer key={type.id} className="team-card-item">
                                         <CardBody
                                             onClick={() => setRenovationType(type.id)}
                                             style={{
@@ -413,7 +397,7 @@ useEffect(() => {
                         </div>
 
                         {/* Form Detail - Now Separate */}
-                        <div style={{
+                        <div className="corporate-form-container" style={{
                             background: 'rgba(26, 26, 26, 0.4)',
                             backdropFilter: 'blur(12px)',
                             border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -440,7 +424,7 @@ useEffect(() => {
                             </div>
 
                             {/* Building Area & Budget */}
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '25px' }}>
+                            <div className="form-grid-2-col">
                                 <div>
                                     <label style={{ display: 'block', marginBottom: '10px', fontWeight: '500' }}>
                                         Luas Area (m²) <span style={{ color: '#FF8C42' }}>*</span>
@@ -519,10 +503,11 @@ useEffect(() => {
                                         </p>
                                     </div>
 
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '18px' }}>
+                                    <div className="horizontal-scroll-container">
                                         {availableWorkers.map((worker) => (
                                             <motion.div
                                                 key={worker.id}
+                                                className="team-card-item"
                                                 whileHover={{ y: -4 }}
                                                 onClick={() => handleWorkerSelection(worker.id)}
                                                 style={{
@@ -749,7 +734,7 @@ useEffect(() => {
                                     <div style={{ height: '1px', flex: 1, background: 'linear-gradient(90deg, #FF8C42, transparent)' }}></div>
                                 </div>
 
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                                <div className="form-grid-2-col">
                                     <div>
                                         <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>
                                             Nama Pemesan
@@ -800,59 +785,64 @@ useEffect(() => {
                             </motion.button>
                         </div>
                     </motion.div>
-                )}
+                )
+                }
 
                 {/* STEP 2: NEGOTIATION & CHAT */}
-                {currentStep === 2 && (
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                    >
-                        <NegotiationSection
-                            team={{
-                                name: "Tim Renovasi Pilihan",
-                                image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=500&q=80",
-                                rating: 4.8
-                            }}
-                            onProceed={(agreedPrice) => {
-                                setFinalAgreedPrice(agreedPrice);
-                                navigateToStep(3);
-                            }}
-                            initialOffer={(() => {
-                                const val = parseInt((budget || "").replace(/[^0-9]/g, '')) || 50000000;
-                                return val < 1000 ? val * 1000000 : val;
-                            })()}
-                        />
-                    </motion.div>
-                )}
+                {
+                    currentStep === 2 && (
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                        >
+                            <NegotiationSection
+                                team={{
+                                    name: "Tim Renovasi Pilihan",
+                                    image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=500&q=80",
+                                    rating: 4.8
+                                }}
+                                onProceed={(agreedPrice) => {
+                                    setFinalAgreedPrice(agreedPrice);
+                                    navigateToStep(3);
+                                }}
+                                initialOffer={(() => {
+                                    const val = parseInt((budget || "").replace(/[^0-9]/g, '')) || 50000000;
+                                    return val < 1000 ? val * 1000000 : val;
+                                })()}
+                            />
+                        </motion.div>
+                    )
+                }
 
                 {/* STEP 3: PAYMENT */}
-                {currentStep === 3 && (
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                    >
-                        <PaymentSection
-                            finalPrice={`Rp ${finalAgreedPrice.toLocaleString('id-ID')}`}
-                            onPrev={() => navigateToStep(2)}
-                            onPaymentComplete={() => {
-                                setAlertTitle('Pembayaran Berhasil!');
-                                setAlertMessage("Pembayaran diterima. Tim renovasi kami akan segera menghubungi Anda.");
-                                setShowAlert(true);
-                                setTimeout(() => {
-                                    window.location.href = "/";
-                                }, 3000);
-                            }}
-                        />
-                    </motion.div>
-                )}
+                {
+                    currentStep === 3 && (
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                        >
+                            <PaymentSection
+                                finalPrice={`Rp ${finalAgreedPrice.toLocaleString('id-ID')}`}
+                                onPrev={() => navigateToStep(2)}
+                                onPaymentComplete={() => {
+                                    setAlertTitle('Pembayaran Berhasil!');
+                                    setAlertMessage("Pembayaran diterima. Tim renovasi kami akan segera menghubungi Anda.");
+                                    setShowAlert(true);
+                                    setTimeout(() => {
+                                        window.location.href = "/";
+                                    }, 3000);
+                                }}
+                            />
+                        </motion.div>
+                    )
+                }
 
-            </div>
+            </div >
 
             {/* Success Modal */}
-            <AnimatePresence>
+            < AnimatePresence >
                 {showSuccessModal && (
                     <div style={{
                         position: 'fixed',
@@ -931,10 +921,10 @@ useEffect(() => {
                         </motion.div>
                     </div>
                 )}
-            </AnimatePresence>
+            </AnimatePresence >
 
             {/* Custom Alert Modal */}
-            <AnimatePresence>
+            < AnimatePresence >
                 {showAlert && (
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -1025,7 +1015,7 @@ useEffect(() => {
                         </motion.div>
                     </motion.div>
                 )}
-            </AnimatePresence>
+            </AnimatePresence >
 
 
         </div >
