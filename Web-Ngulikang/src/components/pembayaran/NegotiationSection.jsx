@@ -142,7 +142,7 @@ const NegotiationSection = ({ team, onProceed, initialOffer = 150000000, roomId 
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '30px', alignItems: 'start' }}
+            className="split-layout-grid"
         >
             {/* LEFT COLUMN: CHAT INTERFACE */}
             <div style={{

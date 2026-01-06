@@ -4,12 +4,12 @@ import logo from './ui/images/LOGO/TERANG.png';
 import { useCart } from '../context/CartContext';
 import { useUser } from '../context/UserContext';
 import { useNotification } from '../context/NotificationContext';
+import MobileStaggeredMenu from './MobileStaggeredMenu';
 
 const Header = ({ onNavigate, activePage }) => { // 1. Accept onNavigate prop
     const [scrolled, setScrolled] = useState(false);
-    // const [activeLink, setActiveLink] = useState('home'); // Removed in favor of activePage
-    // const [activeLink, setActiveLink] = useState('home'); // Removed in favor of activePage
     const [activeDropdown, setActiveDropdown] = useState(null);
+    const [expandedMobileMenu, setExpandedMobileMenu] = useState(null);
     const { user, isAuthenticated, logout } = useUser();
     const { showNotification } = useNotification();
 
@@ -137,7 +137,7 @@ const Header = ({ onNavigate, activePage }) => { // 1. Accept onNavigate prop
                     <button
                         className="mobile-menu-btn"
                         onClick={() => setActiveDropdown(activeDropdown === 'mobile' ? null : 'mobile')}
-                        style={{ marginRight: '10px' }}
+                        style={{ marginRight: '10px', opacity: activeDropdown === 'mobile' ? 0 : 1, transition: 'opacity 0.2s', pointerEvents: activeDropdown === 'mobile' ? 'none' : 'auto' }}
                     >
                         ☰
                     </button>
@@ -720,27 +720,9 @@ const Header = ({ onNavigate, activePage }) => { // 1. Accept onNavigate prop
                             )}
                         </AnimatePresence>
                     </motion.button>
-                    <motion.button
-                        className="icon-btn"
-                        whileHover={{ scale: 1.1, rotate: -5 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => onNavigate(isAuthenticated ? 'profile' : 'login')}
-                        style={{ overflow: 'hidden', padding: 0, width: '40px', height: '40px', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)' }}
-                    >
-                        {user && user.avatar ? (
-                            <img src={user.avatar} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                        ) : (
-                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                        )}
-                    </motion.button>
                     {isAuthenticated ? (
                         <motion.button
-                            className="nav-cta"
+                            className="nav-cta desktop-only"
                             whileHover={{
                                 scale: 1.05,
                                 boxShadow: '0 8px 20px rgba(179, 84, 30, 0.4)'
@@ -755,7 +737,7 @@ const Header = ({ onNavigate, activePage }) => { // 1. Accept onNavigate prop
                         </motion.button>
                     ) : (
                         <motion.button
-                            className="nav-cta"
+                            className="nav-cta desktop-only"
                             whileHover={{
                                 scale: 1.05,
                                 boxShadow: '0 8px 20px rgba(179, 84, 30, 0.4)'
@@ -768,57 +750,11 @@ const Header = ({ onNavigate, activePage }) => { // 1. Accept onNavigate prop
                     )}
                 </div>
                 {/* MOBILE MENU OVERLAY */}
-                <AnimatePresence>
-                    {activeDropdown === 'mobile' && (
-                        <motion.div
-                            initial={{ opacity: 0, x: '-100%' }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: '-100%' }}
-                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                            style={{
-                                position: 'fixed',
-                                top: '90px',
-                                left: 0,
-                                bottom: 0,
-                                width: '100%',
-                                maxWidth: '300px',
-                                background: '#18181b',
-                                borderRight: '1px solid rgba(255,255,255,0.1)',
-                                padding: '20px',
-                                zIndex: 999
-                            }}
-                        >
-                            <ul style={{ listStyle: 'none', padding: 0 }}>
-                                {navItems.map((item) => (
-                                    <li key={item.id} style={{ marginBottom: '15px' }}>
-                                        <div
-                                            onClick={() => {
-                                                if (item.hasDropdown) {
-                                                    // Toggle sub-menu logic could go here, for now just expand
-                                                } else {
-                                                    onNavigate(item.id);
-                                                    setActiveDropdown(null);
-                                                }
-                                            }}
-                                            style={{ color: 'white', fontSize: '1.2rem', fontWeight: 'bold', display: 'flex', justifyContent: 'space-between' }}
-                                        >
-                                            {item.label}
-                                        </div>
-                                        {/* Simple list for 'Search' pages on mobile */}
-                                        {item.id === 'search' && (
-                                            <div style={{ paddingLeft: '20px', marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                                <span onClick={() => handleMenuClick('nguli-borongan')} style={{ color: '#aaa' }}>Nguli Borongan</span>
-                                                <span onClick={() => handleMenuClick('nguli-harian')} style={{ color: '#aaa' }}>Nguli Harian</span>
-                                                <span onClick={() => handleMenuClick('nguli-renovasi')} style={{ color: '#aaa' }}>Nguli Renovasi</span>
-                                                <span onClick={() => handleMenuClick('bangun-baru')} style={{ color: '#aaa' }}>Bangun Baru</span>
-                                            </div>
-                                        )}
-                                    </li>
-                                ))}
-                            </ul>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                <MobileStaggeredMenu
+                    isOpen={activeDropdown === 'mobile'}
+                    onClose={() => setActiveDropdown(null)}
+                    onNavigate={onNavigate}
+                />
             </motion.nav>
         </header>
     );

@@ -136,40 +136,31 @@ const BangunBaru = () => {
             <div style={{ position: 'relative', zIndex: 10, maxWidth: '1200px', margin: '0 auto', padding: '180px 20px 80px' }}>
 
                 {/* STEPPER */}
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '60px' }}>
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0',
-                        background: 'rgba(30, 30, 30, 0.6)',
-                        backdropFilter: 'blur(12px)',
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
-                        borderRadius: '24px',
-                        padding: '25px 50px',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
-                    }}>
+                <div className="step-progress-wrapper">
+                    <div className="step-progress-container">
                         {/* Step 1 */}
-                        <div style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                            <div style={{
+                        <div className="step-item">
+                            <div className="step-circle" style={{
                                 width: '40px',
                                 height: '40px',
                                 borderRadius: '50%',
                                 background: '#FF8C42',
+                                border: 'none',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 fontWeight: 'bold',
                                 margin: '0 auto 8px',
-                                boxShadow: '0 0 20px rgba(255,140,66,0.4)',
-                                color: 'black'
+                                color: 'black',
+                                boxShadow: '0 0 20px rgba(255,140,66,0.4)'
                             }}>1</div>
-                            <div style={{ fontSize: '0.8rem', color: '#FF8C42', fontWeight: 'bold' }}>Isi Data</div>
+                            <div className="step-label" style={{ fontSize: '0.8rem', color: '#FF8C42', fontWeight: 'bold' }}>Isi Data</div>
                         </div>
-                        <div style={{ width: '100px', height: '2px', background: '#444', margin: '0 15px', position: 'relative', top: '-14px' }}></div>
+                        <div className="step-line"></div>
 
                         {/* Step 2 */}
-                        <div style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                            <div style={{
+                        <div className="step-item">
+                            <div className="step-circle" style={{
                                 width: '40px',
                                 height: '40px',
                                 borderRadius: '50%',
@@ -183,13 +174,13 @@ const BangunBaru = () => {
                                 color: currentStep >= 2 ? 'black' : '#777',
                                 boxShadow: currentStep >= 2 ? '0 0 20px rgba(255,140,66,0.4)' : 'none'
                             }}>2</div>
-                            <div style={{ fontSize: '0.8rem', color: currentStep >= 2 ? '#FF8C42' : '#777', fontWeight: currentStep >= 2 ? 'bold' : 'normal' }}>Negosiasi</div>
+                            <div className="step-label" style={{ fontSize: '0.8rem', color: currentStep >= 2 ? '#FF8C42' : '#777', fontWeight: currentStep >= 2 ? 'bold' : 'normal' }}>Negosiasi</div>
                         </div>
-                        <div style={{ width: '100px', height: '2px', background: '#444', margin: '0 15px', position: 'relative', top: '-14px' }}></div>
+                        <div className="step-line"></div>
 
                         {/* Step 3 */}
-                        <div style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                            <div style={{
+                        <div className="step-item">
+                            <div className="step-circle" style={{
                                 width: '40px',
                                 height: '40px',
                                 borderRadius: '50%',
@@ -203,7 +194,7 @@ const BangunBaru = () => {
                                 color: currentStep >= 3 ? 'black' : '#777',
                                 boxShadow: currentStep >= 3 ? '0 0 20px rgba(255,140,66,0.4)' : 'none'
                             }}>3</div>
-                            <div style={{ fontSize: '0.8rem', color: currentStep >= 3 ? '#FF8C42' : '#777', fontWeight: currentStep >= 3 ? 'bold' : 'normal' }}>Pembayaran</div>
+                            <div className="step-label" style={{ fontSize: '0.8rem', color: currentStep >= 3 ? '#FF8C42' : '#777', fontWeight: currentStep >= 3 ? 'bold' : 'normal' }}>Pembayaran</div>
                         </div>
                     </div>
                 </div>
@@ -216,15 +207,14 @@ const BangunBaru = () => {
                         exit={{ opacity: 0, y: -20 }}
                     >
                         {/* Header */}
-                        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+                        <div className="page-header-section">
                             <motion.h1
                                 initial={{ opacity: 0, y: -20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '16px' }}
                             >
                                 Layanan <span style={{ color: '#FF8C42' }}>Bangun Baru</span> Profesional
                             </motion.h1>
-                            <p style={{ color: '#aaa', maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem' }}>
+                            <p>
                                 Wujudkan hunian impian Anda dari nol bersama tim profesional kami
                             </p>
                         </div>
@@ -232,15 +222,9 @@ const BangunBaru = () => {
                         {/* Building Type Selection (Cards above form) */}
                         <div style={{ marginBottom: '50px' }}>
 
-                            <div style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(3, 1fr)',
-                                gap: '24px',
-                                position: 'relative',
-                                zIndex: 1
-                            }}>
+                            <div className="horizontal-scroll-container">
                                 {buildingTypes.map((type) => (
-                                    <CardContainer key={type.id}>
+                                    <CardContainer key={type.id} className="team-card-item">
                                         <CardBody
                                             onClick={() => setBuildingType(type.id)}
                                             style={{
@@ -343,7 +327,7 @@ const BangunBaru = () => {
                         </div>
 
                         {/* Form Container */}
-                        <div style={{
+                        <div className="corporate-form-container" style={{
                             background: 'rgba(26, 26, 26, 0.4)',
                             backdropFilter: 'blur(12px)',
                             border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -429,7 +413,7 @@ const BangunBaru = () => {
                             </div>
 
                             {/* Budget & Location */}
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '25px' }}>
+                            <div className="form-grid-2-col">
                                 <div>
                                     <label style={{ display: 'block', marginBottom: '10px', fontWeight: '500' }}>
                                         Budget Estimasi <span style={{ color: '#FF8C42' }}>*</span>
@@ -622,7 +606,7 @@ const BangunBaru = () => {
                                 </div>
                             </div>
 
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '40px' }}>
+                            <div className="form-grid-2-col">
                                 <div>
                                     <label style={{ display: 'block', color: 'white', fontWeight: 'bold', marginBottom: '10px', fontSize: '0.9rem' }}>Nama Pemesan</label>
                                     <input

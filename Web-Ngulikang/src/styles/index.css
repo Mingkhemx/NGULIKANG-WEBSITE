@@ -39,7 +39,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 9999;
   padding: 20px;
   transition: all 0.3s ease;
   display: flex;
@@ -383,11 +383,46 @@ body {
 }
 
 @media (max-width: 768px) {
+  .nav-cta {
+    display: none !important;
+  }
+
+  .header {
+    padding: 10px;
+  }
+
+  .header.scrolled {
+    padding: 10px !important;
+  }
+
   .logo-title {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    /* reduced from 3rem/2.5rem */
     flex-wrap: wrap;
     justify-content: center;
     line-height: 1.2;
+    text-align: center;
+  }
+
+  /* Force Navbar to maintain shape/style on scroll (No transformation) */
+  .navbar.navbar-glass {
+    padding: 12px 28px;
+    width: 95%;
+    border-radius: 30px;
+    margin: 10px auto;
+    top: 0;
+  }
+
+  .logo-subtitle {
+    font-size: 12px;
+    letter-spacing: 3px;
+  }
+
+  .hero-description {
+    font-size: 0.95rem;
+    padding: 0 10px;
+    line-height: 1.5;
+    margin-top: 20px;
   }
 
   .marketplace-hero-content h1 {
@@ -399,9 +434,7 @@ body {
     grid-template-columns: 1fr !important;
   }
 
-  /* Make filter sidebar sticky/collapsible or simpler on mobile
-     For now, let's just make it flow normally or stick to top if needed
-  */
+  /* Make filter sidebar sticky/collapsible or simpler on mobile */
   .marketplace-filter {
     position: relative !important;
     top: 0 !important;
@@ -411,17 +444,35 @@ body {
 
   /* Navbar Adjustments */
   .navbar {
-    padding: 15px 20px;
-    grid-template-columns: auto 1fr auto; 
-    gap: 10px;
+    padding: 12px 28px;
+    /* Changed from 20px to 28px for more spacing */
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    width: 95%;
+    /* 95% width to allow curves to show nicely */
+    margin: 10px auto;
+    /* Centered with a bit of top margin */
+    max-width: 100%;
+    border-radius: 30px;
+    /* Restored the requested curves */
+    top: 0;
   }
-  
+
+
+
   .navbar-center {
-    display: none; /* Hide desktop menu on mobile */
+    display: none;
+    /* Hide desktop menu on mobile */
   }
 
   .mobile-menu-btn {
-    display: block !important; /* Show hamburger */
+    display: block !important;
+    /* Show hamburger */
+  }
+
+  /* Hero Overlay improvement for mobile text readability */
+  .hero-overlay {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(26, 26, 26, 0.95) 100%);
   }
 }
 
@@ -433,4 +484,591 @@ body {
   font-size: 24px;
   cursor: pointer;
   padding: 5px;
+  position: relative;
+  z-index: 10002;
+  /* Ensure it's above everything */
+  pointer-events: auto;
+}
+
+/* --- NEW RESPONSIVE UTILITIES FOR HOME PAGE --- */
+
+.home-section-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  padding: 0 20px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.feature-text-content {
+  padding-right: 40px;
+}
+
+.card-swap-wrapper {
+  height: 700px;
+  position: relative;
+  overflow: visible;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 0;
+}
+
+.why-choose-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  justify-items: center;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
+  justify-items: center;
+}
+
+.cta-container {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(30px) saturate(150%);
+  border-radius: 32px;
+  padding: 60px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 140, 66, 0.3);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 60px;
+  align-items: center;
+}
+
+.cta-image-wrapper {
+  width: 280px;
+  height: 280px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 1024px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .feature-text-content {
+    padding-right: 0;
+  }
+
+  .card-swap-wrapper {
+    justify-content: center;
+    height: auto;
+    min-height: 500px;
+    margin-top: 40px;
+  }
+
+  .cta-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 40px;
+    gap: 40px;
+  }
+
+  .cta-image-wrapper {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .why-choose-grid {
+    grid-template-columns: 1fr;
+    /* Stack on mobile */
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    /* Stack on mobile */
+  }
+
+  .cta-container {
+    padding: 30px 20px;
+  }
+
+  .cta-image-wrapper {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    aspect-ratio: 1/1;
+  }
+}
+
+/* --- GLOBAL RESPONSIVE UTILITIES --- */
+
+/* Split Layout for Chat & Payment Sections (Negotiation/Payment) */
+.split-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 30px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .split-layout-grid {
+    grid-template-columns: 1fr;
+    /* Stack vertically on tablet/mobile */
+  }
+}
+
+/* Ensure all main containers have padding on mobile */
+@media (max-width: 768px) {
+
+  .home-section-container,
+  main,
+  .page-container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  /* Prevent horizontal overflow globally */
+  body,
+  html {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+}
+
+/* Login Page Utilities */
+.login-split-container {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99999;
+}
+
+.login-form-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: #fff;
+  position: relative;
+  z-index: 10;
+}
+
+.login-visual-side {
+  flex: 1;
+  background: linear-gradient(135deg, #FF8C42 0%, #F54A00 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .login-split-container {
+    flex-direction: column;
+  }
+
+  .login-visual-side {
+    display: none !important;
+    /* Hide visual side on mobile to focus on login */
+  }
+
+  .login-form-side {
+    padding: 20px;
+    align-items: center;
+    /* Center form on mobile */
+    min-height: 100vh;
+    /* Ensure full height */
+  }
+}
+
+/* Responsive Form Grid (2 Columns -> 1 Column) */
+.form-grid-2-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .form-grid-2-col {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Step Progress Responsive Fix */
+.step-progress-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60px;
+  margin-top: 40px;
+}
+
+.step-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 25px 50px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  max-width: 100%;
+  /* Prevent overflow */
+  overflow-x: auto;
+  /* Allow scroll on very small screens if necessary */
+}
+
+.step-item {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.step-line {
+  width: 100px;
+  height: 2px;
+  background: #444;
+  margin: 0 15px;
+  position: relative;
+  top: -14px;
+}
+
+@media (max-width: 600px) {
+
+  /* Smaller container on mobile */
+  .step-progress-container {
+    padding: 15px 10px;
+    border-radius: 16px;
+    width: 100%;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
+  /* Adjust Step Item Layout */
+  .step-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* min-width: 50px; Remove if causing overflow */
+    flex: 1;
+    /* Distribute space */
+  }
+
+  .step-circle {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  .step-label {
+    font-size: 0.65rem !important;
+    margin-top: 2px;
+    white-space: nowrap;
+    /* Prevent wrapping causing height issues if possible, or allowwrap */
+  }
+
+  /* Shrink or hide lines */
+  .step-line {
+    width: auto !important;
+    flex: 1;
+    /* Flexible line width */
+    margin: 0 5px !important;
+    min-width: 20px;
+    top: -10px !important;
+    /* Adjust alignment */
+  }
+}
+
+/* Horizontal Scroll Utilities for Mobile Cards */
+.horizontal-scroll-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.show-more-btn-container {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+@media (max-width: 900px) {
+  .horizontal-scroll-container {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: 16px !important;
+    padding-bottom: 20px !important;
+    /* Space for scrollbar or shadow */
+    scroll-snap-type: x mandatory;
+    grid-template-columns: none !important;
+    /* Hide scrollbar for cleaner look if desired, or keep default */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  .horizontal-scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .team-card-item {
+    min-width: 280px !important;
+    /* Fixed width for consistent card size */
+    max-width: 280px !important;
+    scroll-snap-align: center;
+  }
+
+  .show-more-btn-container {
+    display: none !important;
+    /* Hide "Lihat Tim Lainnya" on mobile */
+  }
+}
+
+/* Desktop: Hide items beyond 3rd when not expanded */
+@media (min-width: 901px) {
+  .desktop-limit-view .team-card-item:nth-child(n+4) {
+    display: none;
+  }
+}
+
+/* Responsive Page Title & Description */
+.page-header-section {
+  text-align: center;
+  margin-bottom: 50px;
+  padding: 0 20px;
+  /* Add horizontal padding */
+}
+
+.page-header-section h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.page-header-section p {
+  color: #aaa;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .page-header-section {
+    margin-bottom: 30px;
+    padding: 0 15px;
+  }
+
+  .page-header-section h1 {
+    font-size: 1.5rem !important;
+    /* Smaller on mobile */
+    margin-bottom: 12px;
+  }
+
+  .page-header-section p {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+}
+
+/* Hide desktop-only elements on mobile */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  /* Corporate Form Responsive */
+  .corporate-form-container {
+    padding: 20px !important;
+    border-radius: 20px !important;
+  }
+
+  .corporate-form-container h2 {
+    font-size: 1.5rem !important;
+  }
+
+  .corporate-form-container p {
+    font-size: 0.9rem !important;
+  }
+
+  /* Step Progress Responsive */
+  .step-progress-wrapper {
+    padding: 0 10px;
+  }
+
+  .step-progress-container {
+    padding: 15px 20px !important;
+    gap: 0 !important;
+  }
+
+  .step-circle {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.9rem !important;
+  }
+
+  .step-label {
+    font-size: 0.7rem !important;
+  }
+
+  .step-line {
+    width: 60px !important;
+  }
+}
+
+/* Step Progress Stepper Styles */
+.step-progress-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+
+.step-progress-container {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 25px 50px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.step-item {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #222;
+  border: 2px solid #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin: 0 auto 8px;
+  color: #777;
+  transition: all 0.3s ease;
+}
+
+.step-circle.active {
+  background: #FF8C42;
+  border: none;
+  color: black;
+  box-shadow: 0 0 20px rgba(255, 140, 66, 0.4);
+}
+
+.step-label {
+  font-size: 0.8rem;
+  color: #777;
+  font-weight: normal;
+  transition: all 0.3s ease;
+}
+
+.step-label.active {
+  color: #FF8C42;
+  font-weight: bold;
+}
+
+.step-line {
+  width: 100px;
+  height: 2px;
+  background: #444;
+  margin: 0 15px;
+  position: relative;
+  top: -14px;
+}
+
+/* Chat Page Responsive Styles */
+@media (max-width: 768px) {
+
+  /* Main chat container - reduce padding and make vertical */
+  .chat-page-container {
+    padding-top: 100px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-bottom: 20px !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: calc(100vh - 100px) !important;
+    gap: 15px !important;
+  }
+
+  /* Sidebar - make full width and limit height */
+  .chat-sidebar {
+    width: 100% !important;
+    max-height: 35vh !important;
+    min-height: 250px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Chat area - make full width and take remaining space */
+  .chat-area {
+    width: 100% !important;
+    flex: 1 !important;
+    min-height: 50vh !important;
+    max-height: 60vh !important;
+  }
+
+  /* Chat input area - make it more comfortable on mobile */
+  .chat-input-area {
+    padding: 12px !important;
+    background: rgba(24, 24, 27, 0.95) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 0 0 24px 24px !important;
+  }
+
+  .chat-input-area form {
+    gap: 8px !important;
+    align-items: center !important;
+  }
+
+  .chat-input-area input[type="text"] {
+    padding: 12px 18px !important;
+    font-size: 0.9rem !important;
+    min-height: 44px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 22px !important;
+  }
+
+  .chat-input-area button[type="submit"] {
+    width: 44px !important;
+    height: 44px !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 2px 10px rgba(255, 140, 66, 0.4) !important;
+  }
+
+  .chat-input-area button[type="button"] {
+    font-size: 1rem !important;
+    padding: 6px !important;
+    min-width: 32px !important;
+  }
 }
