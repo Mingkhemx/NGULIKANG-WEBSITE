@@ -1,18 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Particles from '../components/ui/Particles';
+import { apiGet } from '../lib/api';
 
 const OrderTracker = () => {
     // Mock Data Orders
-    const [orders, setOrders] = useState([]);
+    const [orders, setOrders] = useState([
+        {
+            id: 'ORD-2024-001',
+            date: '5 Jan 2024',
+            status: 'Dikirim',
+            total: 450000,
+            products: [
+                {
+                    name: 'Semen Gresik 50kg',
+                    quantity: 10,
+                    price: 45000,
+                    image: 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=200&q=80'
+                }
+            ],
+            shipping: {
+                courier: 'JNE Regular',
+                resi: 'JNE1234567890',
+                history: [
+                    { desc: 'Paket sedang dalam perjalanan ke alamat tujuan', date: '6 Jan 2024, 10:30' },
+                    { desc: 'Paket telah sampai di sorting center Jakarta', date: '6 Jan 2024, 08:00' },
+                    { desc: 'Paket telah dikirim dari gudang', date: '5 Jan 2024, 16:00' },
+                    { desc: 'Pesanan dikemas', date: '5 Jan 2024, 14:00' },
+                    { desc: 'Pembayaran berhasil diverifikasi', date: '5 Jan 2024, 10:00' }
+                ]
+            }
+        }
+    ]);
 
-useEffect(() => {
-  let alive = true;
-  apiGet('/api/market-orders')
-    .then((data) => { if (alive) setOrders(data || []); })
-    .catch(console.error);
-  return () => { alive = false; };
-}, []);
+    useEffect(() => {
+        let alive = true;
+        apiGet('/api/market-orders')
+            .then((data) => {
+                if (alive && data && data.length > 0) {
+                    setOrders(data);
+                }
+            })
+            .catch(console.error);
+        return () => { alive = false; };
+    }, []);
 
 
     const [selectedOrder, setSelectedOrder] = useState(null);

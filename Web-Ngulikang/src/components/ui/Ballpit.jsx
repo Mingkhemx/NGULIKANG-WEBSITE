@@ -254,10 +254,10 @@ function S(e) {
         document.body.addEventListener('pointerleave', L);
         document.body.addEventListener('click', C);
 
-        document.body.addEventListener('touchstart', TouchStart, { passive: false });
-        document.body.addEventListener('touchmove', TouchMove, { passive: false });
-        document.body.addEventListener('touchend', TouchEnd, { passive: false });
-        document.body.addEventListener('touchcancel', TouchEnd, { passive: false });
+        document.body.addEventListener('touchstart', TouchStart, { passive: true });
+        document.body.addEventListener('touchmove', TouchMove, { passive: true });
+        document.body.addEventListener('touchend', TouchEnd, { passive: true });
+        document.body.addEventListener('touchcancel', TouchEnd, { passive: true });
 
         R = true;
       }
@@ -326,7 +326,7 @@ function L() {
 
 function TouchStart(e) {
   if (e.touches.length > 0) {
-    e.preventDefault();
+    // e.preventDefault(); // REMOVED to allow scrolling
     A.x = e.touches[0].clientX;
     A.y = e.touches[0].clientY;
 
@@ -347,7 +347,7 @@ function TouchStart(e) {
 
 function TouchMove(e) {
   if (e.touches.length > 0) {
-    e.preventDefault();
+    // e.preventDefault(); // REMOVED to allow scrolling
     A.x = e.touches[0].clientX;
     A.y = e.touches[0].clientY;
 
@@ -448,9 +448,17 @@ class W {
       B.fromArray(o, base);
 
       // Custom "Pop" Effect: Randomly make some balls float up
-      if (Math.random() < 0.003) {
-        B.y += 2.5;
-        B.x += (Math.random() - 0.5) * 1.0;
+      // Lower probability (0.004) to keep bottom filled
+      if (Math.random() < 0.004) {
+        const distX = Math.abs(I.x);
+
+        // Center (X=0) jumps low (0.3), Sides jump higher (scales with distance)
+        // At X=5, force is approx 1.0. This addresses "masi terlalu tinggi" while keeping sides active.
+        let jumpForce = 0.3 + (distX * 0.15);
+        if (jumpForce > 1.0) jumpForce = 1.0; // Cap max force
+
+        B.y += jumpForce;
+        B.x += (Math.random() - 0.5) * 0.2; // Minimized horizontal spread
       }
 
       B.y -= e.delta * t.gravity * n[idx];
@@ -645,7 +653,8 @@ class Z extends d {
     this.physics.update(e);
     for (let idx = 0; idx < this.count; idx++) {
       U.position.fromArray(this.physics.positionData, 3 * idx);
-      if (idx === 0 && this.config.followCursor === false) {
+      // Hide the control sphere (cursor ball) visually, but physics still apply
+      if (idx === 0) {
         U.scale.setScalar(0);
       } else {
         U.scale.setScalar(this.physics.sizeData[idx]);
@@ -675,24 +684,27 @@ function createBallpit(e, t = {}) {
   const o = new w(new a(0, 0, 1), 0);
   const r = new a();
   let c = false;
+  let h;
+  if (t.followCursor) {
+    e.style.touchAction = 'none';
+    e.style.userSelect = 'none';
+    e.style.webkitUserSelect = 'none';
 
-  e.style.touchAction = 'none';
-  e.style.userSelect = 'none';
-  e.style.webkitUserSelect = 'none';
+    h = S({
+      domElement: e,
+      onMove() {
+        n.setFromCamera(h.nPosition, i.camera);
+        i.camera.getWorldDirection(o.normal);
+        n.ray.intersectPlane(o, r);
+        s.physics.center.copy(r);
+        s.config.controlSphere0 = true;
+      },
+      onLeave() {
+        s.config.controlSphere0 = false;
+      }
+    });
+  }
 
-  const h = S({
-    domElement: e,
-    onMove() {
-      n.setFromCamera(h.nPosition, i.camera);
-      i.camera.getWorldDirection(o.normal);
-      n.ray.intersectPlane(o, r);
-      s.physics.center.copy(r);
-      s.config.controlSphere0 = true;
-    },
-    onLeave() {
-      s.config.controlSphere0 = false;
-    }
-  });
   function initialize(e) {
     if (s) {
       i.clear();
@@ -720,7 +732,7 @@ function createBallpit(e, t = {}) {
       c = !c;
     },
     dispose() {
-      h.dispose();
+      if (h) h.dispose();
       i.dispose();
     }
   };

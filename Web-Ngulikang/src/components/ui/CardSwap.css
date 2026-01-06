@@ -114,6 +114,12 @@
 @media (max-width: 1024px) {
     .card-swap-container {
         transform: scale(0.8);
+        right: auto;
+        left: 50%;
+        margin-left: -200px;
+        /* Adjust based on width/scale (700px * 0.8 / 2 approx, or just use translateX) */
+        transform: translateX(-50%) scale(0.8);
+        bottom: 50px;
     }
 
     .card-number {
@@ -123,7 +129,29 @@
 
 @media (max-width: 768px) {
     .card-swap-container {
-        transform: scale(0.65);
+        /* Reset absolute positioning */
+        bottom: auto !important;
+        right: auto !important;
+
+        /* Position relative to the top of the wrapper */
+        top: 40px;
+        left: 50%;
+        /* Exact center */
+        margin-left: 0;
+        /* RESET the inherited -200px margin! */
+
+        /* Scale down the 700px wide container */
+        transform-origin: top center;
+        transform: translateX(-50%) scale(0.5);
+
+        /* Prevent the large container box from blocking clicks */
+        pointer-events: none;
+    }
+
+    /* Re-enable clicks on the cards themselves */
+    .card-swap-container .window-card,
+    .card-swap-container .card-body {
+        pointer-events: auto;
     }
 
     .card-number {
@@ -131,6 +159,14 @@
     }
 
     .card-body {
-        padding: 60px 30px;
+        padding: 40px 20px;
+    }
+
+    .card-body h4 {
+        font-size: 1.5rem;
+    }
+
+    .card-body p {
+        font-size: 0.9rem;
     }
 }

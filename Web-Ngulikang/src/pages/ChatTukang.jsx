@@ -88,45 +88,30 @@ const ChatTukang = ({ onNavigate }) => {
                 // First get existing rooms
                 const res = await api.get('/chat/rooms');
                 // Filter logic:
-                // We want NORMAL chats that are OPEN.
-                // We ALSO want ADMIN chats (Customer Service).
+                // We want ONLY NORMAL chats that are OPEN (chat with tukang).
+                // We DO NOT want ADMIN chats (Customer Service) - those belong in LiveChat only.
                 const filteredRooms = res.data.filter(room => {
-                    const isNormalOpen = room.type === 'NORMAL' && room.status === 'OPEN';
-                    const isAdmin = room.type === 'ADMIN';
-                    return isNormalOpen || isAdmin;
+                    return room.type === 'NORMAL' && room.status === 'OPEN';
                 });
 
-                console.log('[ChatTukang] Total rooms:', res.data.length, 'Filtered:', filteredRooms.length);
+                console.log('[ChatTukang] Total rooms:', res.data.length, 'Filtered (NORMAL only):', filteredRooms.length);
 
                 let formattedContacts = filteredRooms.map(room => {
-                    const isSupport = room.type === 'ADMIN';
-                    const target = isSupport ? { name: 'Customer Service', role: 'Support', avatar: 'https://ui-avatars.com/api/?name=CS&background=0D8ABC&color=fff' } : room.tukang;
+                    const target = room.tukang;
                     const lastMsg = room.messages?.[0];
                     return {
                         id: room.id,
                         name: target?.name || 'Unknown',
-                        role: target?.role || (isSupport ? 'Customer Service' : 'Tukang'),
+                        role: target?.role || 'Tukang',
                         avatar: target?.avatar || `https://ui-avatars.com/api/?name=${target?.name || 'U'}&background=random`,
                         online: true, // Mock online status for now
                         unread: 0,
-                        lastMsg: lastMsg ? lastMsg.content : (isSupport ? 'Hubungi CS jika ada kendala' : 'Mulai percakapan'),
+                        lastMsg: lastMsg ? lastMsg.content : 'Mulai percakapan',
                         type: room.type
                     };
                 });
 
-                // Auto-create CS room if it doesn't exist
-                const csRoom = formattedContacts.find(c => c.type === 'ADMIN');
-                if (!csRoom) {
-                    try {
-                        // Assuming this endpoint exists from the other branch or we need to add it
-                        // If it fails, we just don't show it or show error
-                        // const newCsRoom = await api.post('/chat/support'); 
-                        // For now let's just create it on demand or skip if backend not ready
-                        // We will skip auto-creation to avoid errors if backend route missing
-                    } catch (err) {
-                        console.error("Failed to create CS room", err);
-                    }
-                }
+                // NO auto-creation of CS room here - that's only for LiveChat page
 
                 setContacts(formattedContacts);
                 if (formattedContacts.length > 0 && !activeContact) {
@@ -237,7 +222,7 @@ const ChatTukang = ({ onNavigate }) => {
                 <Particles count={30} color="#FF8C42" />
             </div>
 
-            <div style={{
+            <div className="chat-page-container" style={{
                 paddingTop: '180px',
                 paddingBottom: '40px',
                 maxWidth: '1200px',
@@ -251,7 +236,7 @@ const ChatTukang = ({ onNavigate }) => {
             }}>
 
                 {/* --- SIDEBAR --- */}
-                <div style={{
+                <div className="chat-sidebar" style={{
                     width: '350px',
                     background: 'rgba(24, 24, 27, 0.6)',
                     backdropFilter: 'blur(20px)',
@@ -353,7 +338,7 @@ const ChatTukang = ({ onNavigate }) => {
                 </div>
 
                 {/* --- CHAT AREA --- */}
-                <div style={{
+                <div className="chat-area" style={{
                     flex: 1,
                     background: 'rgba(24, 24, 27, 0.4)',
                     backdropFilter: 'blur(20px)',
@@ -438,7 +423,7 @@ const ChatTukang = ({ onNavigate }) => {
                             </div>
 
                             {/* Input Area */}
-                            <div style={{ padding: '20px', background: 'rgba(24, 24, 27, 0.8)', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                            <div className="chat-input-area" style={{ padding: '20px', background: 'rgba(24, 24, 27, 0.8)', borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
                                 <form onSubmit={handleSendMessage} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
                                     <button type="button" style={{ background: 'none', border: 'none', color: '#a1a1aa', cursor: 'pointer', fontSize: '1.2rem' }}>📎</button>
                                     <input

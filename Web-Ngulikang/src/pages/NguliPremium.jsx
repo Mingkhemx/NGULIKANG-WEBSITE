@@ -221,15 +221,14 @@ const NguliPremium = () => {
                 {currentStep === 1 && (
                     <>
                         {/* Header */}
-                        <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+                        <div className="page-header-section">
                             <motion.h1
                                 initial={{ opacity: 0, y: -20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '16px' }}
                             >
                                 <span style={{ color: '#FF8C42' }}>Premium</span> Consultation
                             </motion.h1>
-                            <p style={{ color: '#aaa', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
+                            <p>
                                 Konsultasi langsung dengan arsitek & kontraktor terbaik untuk proyek impian Anda
                             </p>
                         </div>
@@ -239,10 +238,11 @@ const NguliPremium = () => {
                             <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '40px', textAlign: 'center' }}>
                                 Pilih Paket Konsultasi
                             </h2>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
+                            <div className="horizontal-scroll-container">
                                 {consultationPackages.map((pkg) => (
                                     <motion.div
                                         key={pkg.id}
+                                        className="team-card-item"
                                         whileHover={{ y: -10, scale: 1.02 }}
                                         onClick={() => setSelectedPackage(pkg.id)}
                                         style={{
@@ -359,10 +359,11 @@ const NguliPremium = () => {
                             <h2 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '40px', textAlign: 'center' }}>
                                 Pilih Konsultan Terbaik
                             </h2>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
+                            <div className="horizontal-scroll-container">
                                 {consultants.map((consultant) => (
                                     <motion.div
                                         key={consultant.id}
+                                        className="team-card-item"
                                         whileHover={{ y: -8 }}
                                         onClick={() => setSelectedConsultant(consultant.id)}
                                         style={{

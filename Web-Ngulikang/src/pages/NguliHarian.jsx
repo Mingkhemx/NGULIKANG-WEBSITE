@@ -156,28 +156,18 @@ const NguliHarian = () => {
             <div className="container" style={{ position: 'relative', zIndex: 10, maxWidth: '1200px', margin: '0 auto', padding: '120px 20px 80px' }}>
 
                 {/* 1. STEPPER */}
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '60px', marginTop: '40px' }}>
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0',
-                        background: 'rgba(30, 30, 30, 0.6)',
-                        backdropFilter: 'blur(12px)',
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
-                        borderRadius: '24px',
-                        padding: '25px 50px',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
-                    }}>
+                <div className="step-progress-wrapper">
+                    <div className="step-progress-container">
                         {/* Step 1 */}
-                        <div style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#FF8C42', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', margin: '0 auto 8px', boxShadow: '0 0 20px rgba(255,140,66,0.4)' }}>1</div>
-                            <div style={{ fontSize: '0.8rem', color: '#FF8C42', fontWeight: 'bold' }}>Pilih Tim</div>
+                        <div className="step-item">
+                            <div className="step-circle" style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#FF8C42', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', margin: '0 auto 8px', boxShadow: '0 0 20px rgba(255,140,66,0.4)', color: 'white' }}>1</div>
+                            <div className="step-label" style={{ fontSize: '0.8rem', color: '#FF8C42', fontWeight: 'bold' }}>Pilih Tim</div>
                         </div>
-                        <div style={{ width: '100px', height: '2px', background: '#444', margin: '0 15px', position: 'relative', top: '-14px' }}></div>
+                        <div className="step-line"></div>
 
                         {/* Step 2 */}
-                        <div style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                            <div style={{
+                        <div className="step-item">
+                            <div className="step-circle" style={{
                                 width: '40px',
                                 height: '40px',
                                 borderRadius: '50%',
@@ -191,13 +181,13 @@ const NguliHarian = () => {
                                 color: currentStep >= 2 ? 'black' : '#777',
                                 boxShadow: currentStep >= 2 ? '0 0 20px rgba(255,140,66,0.4)' : 'none'
                             }}>2</div>
-                            <div style={{ fontSize: '0.8rem', color: currentStep >= 2 ? '#FF8C42' : '#777', fontWeight: currentStep >= 2 ? 'bold' : 'normal' }}>Negosiasi</div>
+                            <div className="step-label" style={{ fontSize: '0.8rem', color: currentStep >= 2 ? '#FF8C42' : '#777', fontWeight: currentStep >= 2 ? 'bold' : 'normal' }}>Negosiasi</div>
                         </div>
-                        <div style={{ width: '100px', height: '2px', background: '#444', margin: '0 15px', position: 'relative', top: '-14px' }}></div>
+                        <div className="step-line"></div>
 
                         {/* Step 3 */}
-                        <div style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-                            <div style={{
+                        <div className="step-item">
+                            <div className="step-circle" style={{
                                 width: '40px',
                                 height: '40px',
                                 borderRadius: '50%',
@@ -210,7 +200,7 @@ const NguliHarian = () => {
                                 margin: '0 auto 8px',
                                 color: currentStep >= 3 ? 'black' : '#777'
                             }}>3</div>
-                            <div style={{ fontSize: '0.8rem', color: '#777' }}>Pembangunan</div>
+                            <div className="step-label" style={{ fontSize: '0.8rem', color: '#777' }}>Pembangunan</div>
                         </div>
                     </div>
                 </div>
@@ -219,20 +209,21 @@ const NguliHarian = () => {
                 {currentStep === 1 && (
                     <>
                         {/* 2. HEADER TEXT */}
-                        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-                            <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '16px' }}>
+                        <div className="page-header-section">
+                            <h1>
                                 Cari Tukang Harian Profesional
                             </h1>
-                            <p style={{ color: '#aaa', maxWidth: '600px', margin: '0 auto' }}>
+                            <p>
                                 Temukan tukang spesialis untuk pekerjaan harian dengan tarif transparan dan hasil memuaskan.
                             </p>
                         </div>
 
                         {/* 3. CARDS SECTION */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px', marginBottom: '40px' }}>
-                            {teams.slice(0, isExpanded ? teams.length : 3).map((team) => (
+                        <div className={`horizontal-scroll-container ${!isExpanded ? 'desktop-limit-view' : ''}`}>
+                            {teams.map((team) => (
                                 <motion.div
                                     key={team.id}
+                                    className="team-card-item"
                                     whileHover={{ y: -10 }}
                                     style={{
                                         background: 'rgba(255, 255, 255, 0.03)',
@@ -367,7 +358,7 @@ const NguliHarian = () => {
                         </div>
 
                         {/* SHOW MORE BUTTON */}
-                        <div style={{ textAlign: 'center', marginBottom: '80px' }}>
+                        <div className="show-more-btn-container">
                             <button
                                 onClick={() => setIsExpanded(!isExpanded)}
                                 style={{
@@ -395,7 +386,7 @@ const NguliHarian = () => {
                         </div>
 
                         {/* 4. FORM SECTION (DIFFERENT FOR HARIAN) */}
-                        <div style={{
+                        <div className="corporate-form-container" style={{
                             background: 'rgba(255, 255, 255, 0.03)',
                             backdropFilter: 'blur(16px)',
                             borderRadius: '30px',
@@ -410,7 +401,7 @@ const NguliHarian = () => {
 
                             <form>
                                 {/* Row 1: Jenis Pekerjaan & Durasi */}
-                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
+                                <div className="form-grid-2-col">
                                     <div>
                                         <label style={{ display: 'block', color: 'white', fontWeight: 'bold', marginBottom: '10px', fontSize: '0.9rem' }}>Jenis Pekerjaan</label>
                                         <div style={{ position: 'relative' }}>

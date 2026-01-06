@@ -35,12 +35,12 @@ const Home = () => {
                     gravity={0.35}
                     friction={0.99}
                     wallBounce={0.9}
-                    followCursor={false}
-                    style={{ position: 'absolute', top: 0, left: 0, zIndex: -1 }}
+                    followCursor={true}
+                    style={{ position: 'absolute', top: 0, left: 0, zIndex: -1, pointerEvents: 'none' }}
                 />
                 <div className="hero-overlay" style={{ opacity: 0.6, pointerEvents: 'none' }}></div>
 
-                <div className="container">
+                <div className="container" style={{ position: 'relative', zIndex: 5 }}>
                     <div className="hero-content">
                         <div className="logo-section" style={{ position: 'relative', zIndex: 10 }}>
                             <h2 className="logo-subtitle">Layanan Kami</h2>
@@ -73,22 +73,11 @@ const Home = () => {
                 display: 'flex',
                 alignItems: 'center'
             }}>
-                <div className="container" style={{
-                    maxWidth: '1400px',
-                    margin: '0 auto',
-                    width: '100%',
-                    position: 'relative',
-                    zIndex: 2
-                }}>
+                <div className="container home-section-container">
                     {/* Two Column Layout like React Bits */}
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: '1fr 1fr',
-                        gap: '80px',
-                        alignItems: 'center'
-                    }}>
+                    <div className="feature-grid">
                         {/* Left Side - Text */}
-                        <div style={{ paddingRight: '40px' }}>
+                        <div className="feature-text-content">
                             <h2 style={{
                                 fontSize: '3.5rem',
                                 fontWeight: '700',
@@ -109,15 +98,7 @@ const Home = () => {
                         </div>
 
                         {/* Right Side - Card Swap */}
-                        <div style={{
-                            height: '700px',
-                            position: 'relative',
-                            overflow: 'visible',
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            alignItems: 'center',
-                            paddingRight: '0'
-                        }}>
+                        <div className="card-swap-wrapper">
                             <CardSwap
                                 width={700}
                                 height={550}
@@ -267,12 +248,7 @@ const Home = () => {
                         </p>
                     </div>
 
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                        gap: '40px',
-                        justifyItems: 'center'
-                    }}>
+                    <div className="why-choose-grid">
                         <TiltedCard
                             imageSrc={constructionImg1}
                             altText="Tukang Terverifikasi"
@@ -482,12 +458,7 @@ const Home = () => {
                     </div>
 
                     {/* Testimonial Cards Grid */}
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                        gap: '40px',
-                        justifyItems: 'center'
-                    }}>
+                    <div className="testimonials-grid">
                         {/* Testimonial Card 1 */}
                         <div style={{
                             width: '100%',
@@ -679,18 +650,7 @@ const Home = () => {
                 overflow: 'hidden'
             }}>
                 <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-                    <div style={{
-                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%)',
-                        backdropFilter: 'blur(30px) saturate(150%)',
-                        borderRadius: '32px',
-                        padding: '60px',
-                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
-                        border: '1px solid rgba(255, 140, 66, 0.3)',
-                        display: 'grid',
-                        gridTemplateColumns: '1fr auto',
-                        gap: '60px',
-                        alignItems: 'center'
-                    }}>
+                    <div className="cta-container">
                         {/* Left Content */}
                         <div>
                             <h2 style={{
@@ -735,13 +695,7 @@ const Home = () => {
                         </div>
 
                         {/* Right Image */}
-                        <div style={{
-                            width: '280px',
-                            height: '280px',
-                            borderRadius: '24px',
-                            overflow: 'hidden',
-                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)'
-                        }}>
+                        <div className="cta-image-wrapper">
                             <img
                                 src={tukangImage}
                                 alt="NguliKang Worker"
